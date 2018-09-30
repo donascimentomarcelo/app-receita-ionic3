@@ -2,13 +2,6 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { IngredienteService } from '../../services/domain/ingrediente.service';
 
-/**
- * Generated class for the IngredientesPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-
 @IonicPage()
 @Component({
   selector: 'page-ingredientes',
@@ -23,12 +16,16 @@ export class IngredientesPage {
   }
 
   ionViewDidLoad() {
+    this.listarTodos();
+  }
+
+  public listarTodos() {
     this.ingredienteService.listarTodos()
       .subscribe(response => {
-        console.log(response)
-      }, error => {
-        console.log(error);
-      });
+      console.log(response)
+    }, error => {
+      console.log(error);
+    });
   }
 
 }
