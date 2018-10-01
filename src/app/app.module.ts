@@ -1,3 +1,4 @@
+import { ReceitaService } from './../services/domain/receita.service';
 import { IngredienteService } from './../services/domain/ingrediente.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
@@ -27,6 +28,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     IngredienteService,
+    ReceitaService
   ]
 })
 export class AppModule {}
