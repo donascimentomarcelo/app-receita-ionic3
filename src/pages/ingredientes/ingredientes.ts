@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { IngredienteService } from '../../services/domain/ingrediente.service';
+import { IngredientesDTO } from '../../models/ingredientes.dto';
 
 @IonicPage()
 @Component({
@@ -15,6 +16,8 @@ export class IngredientesPage {
       public ingredienteService: IngredienteService) {
   }
 
+  public ingredientes: IngredientesDTO[];
+
   ionViewDidLoad() {
     this.listarTodos();
   }
@@ -22,7 +25,7 @@ export class IngredientesPage {
   public listarTodos() {
     this.ingredienteService.listarTodos()
       .subscribe(response => {
-      console.log(response)
+      this.ingredientes = response
     }, error => {
       console.log(error);
     });
