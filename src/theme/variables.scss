@@ -38,7 +38,11 @@ $colors: (
   secondary:  #32db64,
   danger:     #f53d3d,
   light:      #f4f4f4,
-  dark:       #222
+  dark:       #222,
+  tertiary: (
+    base: rgba(92, 3, 144, 0.953),
+    contrast:#f4f4f4
+  )
 );
 
 
@@ -55,7 +59,9 @@ $colors: (
 
 $toolbar-md-background: rgba(92, 3, 144, 0.953);
 $background-color: rgba(215, 164, 245, 0.953);
-
+$label-md-text-color: rgba(92, 3, 144, 0.953);
+$focus-outline-border-color: rgba(92, 3, 144, 0.953);
+$text-input-md-highlight-color: rgba(92, 3, 144, 0.953);
 // App Windows Variables
 // --------------------------------------------------
 // Windows only Sass variables can go here
