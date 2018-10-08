@@ -1,0 +1,41 @@
+<ion-header>
+
+  <ion-navbar>
+    <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Lista de receitas</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-list>
+
+    <form [formGroup]="formGroup" (ngSubmit)="pesquisar()">
+      <ion-item>
+          <ion-label fixed>titulo</ion-label>
+          <ion-input type="text" formControlName="titulo"></ion-input>
+        </ion-item>
+      
+        <ion-item>
+          <ion-label fixed>descricao</ion-label>
+          <ion-input type="text" formControlName="descricao"></ion-input>
+        </ion-item>
+        
+        <ion-item>
+            <button ion-button color="tertiary" type="submit">Pesquisar</button>
+            <button ion-button color="tertiary" type="button" (click)="limpar()" outline>Limpar</button>
+        </ion-item>
+    </form>
+
+  </ion-list>
+
+  <ion-list inset>
+    <ion-item ion-item *ngFor="let receita of receitas">
+      <h2>{{ receita.titulo }}</h2>
+      <h3>{{ receita.descricao }}</h3>
+    </ion-item>
+  </ion-list>
+</ion-content>
