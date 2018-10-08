@@ -1,3 +1,4 @@
+import { ReceitasFiltro } from './../../models/filtros/receita.filter';
 import { ReceitasDTO } from './../../models/receitas.dto';
 import { enviroment } from './../../enviroment/enviroment.dev';
 import { Observable } from 'rxjs/Observable';
@@ -11,5 +12,9 @@ constructor(public http: HttpClient) { }
 
     public listarTodos() : Observable<ReceitasDTO[]> {
         return this.http.get<ReceitasDTO[]>(`${enviroment.baseUrl}/receitas`);
+    }
+
+    public filtrar(filtro: ReceitasFiltro) : Observable<ReceitasDTO[]> {
+        return this.http.post<ReceitasDTO[]>(`${enviroment.baseUrl}/receitas/filtrar`, filtro);
     }
 }
