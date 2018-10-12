@@ -1,3 +1,4 @@
+import { DetalhesReceitasPage } from './../pages/detalhes-receitas/detalhes-receitas';
 import { ReceitaService } from './../services/domain/receita.service';
 import { IngredienteService } from './../services/domain/ingrediente.service';
 import { BrowserModule } from '@angular/platform-browser';
@@ -13,6 +14,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 @NgModule({
   declarations: [
     MyApp,
+    DetalhesReceitasPage,
   ],
   imports: [
     BrowserModule,
@@ -22,6 +24,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
+    DetalhesReceitasPage,
   ],
   providers: [
     StatusBar,

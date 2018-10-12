@@ -1,6 +1,7 @@
-import { IngredientesDTO } from './ingredientes.dto';
+import { ItensDTO } from './itens.dto';
 export interface ReceitasDTO {
+    id: string;
     descricao: string;
     titulo: string;
-    engredientes: IngredientesDTO[];
+    itens: ItensDTO[];
 }
