@@ -12,6 +12,7 @@ import { DetalhesReceitasPage } from '../detalhes-receitas/detalhes-receitas';
 export class MinhasReceitasPage {
 
   public minhasReceitas: ReceitasDTO[];
+  tipoReceita: string = "completas";
 
   constructor(
     public navCtrl: NavController, 
