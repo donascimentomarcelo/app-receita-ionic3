@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-navbar>
+      <ion-buttons end>
+        <button ion-button icon-only class="alinhar-botao" (click)="sair()">
+            <ion-icon item-right name="close"></ion-icon>
+        </button>
+      </ion-buttons>
+    <ion-title>Detalhes</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-card>
+
+      <ion-card-header>
+        <h1>{{receita?.titulo}}</h1>
+      </ion-card-header>
+    
+      <ion-card-content>
+          <ion-item>
+            <h2>{{receita?.descricao}}</h2>
+          </ion-item>
+          <ion-list inset>
+            <ion-item ion-item *ngFor="let item of receita?.itens">
+              <h2>{{ item.engrediente.descricao }}</h2>
+              <h3>{{ item.quantidade }} {{ item.engrediente.medida }}</h3>
+            </ion-item>
+          </ion-list>
+        <ion-item>
+          <ion-icon name="logo-twitter" item-start></ion-icon>
+          Followers
+          <ion-badge item-end>260k</ion-badge>
+        </ion-item>
+      </ion-card-content>
+    
+    </ion-card>
+</ion-content>
