@@ -1,0 +1,19 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Minhas receitas</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-list inset>
+    <ion-item ion-item *ngFor="let receita of minhasReceitas" (click)="detalhes(receita.id)">
+      <h2>{{ receita.titulo }}</h2>
+      <h3>{{ receita.descricao }}</h3>
+    </ion-item>
+  </ion-list>
+</ion-content>

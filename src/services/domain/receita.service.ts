@@ -17,4 +17,12 @@ constructor(public http: HttpClient) { }
     public filtrar(filtro: ReceitasFiltro) : Observable<ReceitasDTO[]> {
         return this.http.post<ReceitasDTO[]>(`${enviroment.baseUrl}/receitas/filtrar`, filtro);
     }
+
+    public listarMinhasReceitas() : Observable<ReceitasDTO[]> {
+        return this.http.get<ReceitasDTO[]>(`${enviroment.baseUrl}/receitas/minhas-receitas`);
+    }
+
+    public pesquisar(id: number) : Observable<ReceitasDTO> {
+        return this.http.get<ReceitasDTO>(`${enviroment.baseUrl}/receitas/${id}`);
+    }
 }
