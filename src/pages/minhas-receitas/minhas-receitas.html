@@ -19,21 +19,51 @@
 
 <ion-content padding>    
     <div [ngSwitch]="tipoReceita">
-      <ion-list *ngSwitchCase="'completas'">
-        <ion-list inset>
-          <ion-item ion-item *ngFor="let receita of receitasCompletas" (click)="detalhes(receita.id)">
+      <ion-list *ngSwitchCase="'completas'" inset>
+        <ion-item-sliding *ngFor="let receita of receitasCompletas" (click)="detalhes(receita.id)">
+          <ion-item>
             <h2>{{ receita.titulo }}</h2>
             <h3>{{ receita.descricao }}</h3>
           </ion-item>
-        </ion-list>
+          <ion-item-options side="right">
+              <button ion-button color="tertiary">
+                <ion-icon name="create"></ion-icon>
+                Montar
+              </button>
+              <button ion-button color="quaternary">
+                <ion-icon name="close-circle"></ion-icon>
+                Desmontar
+              </button>
+              <button ion-button color="danger">
+                <ion-icon name="trash"></ion-icon>
+                Deletar
+              </button>
+            </ion-item-options>
+        </ion-item-sliding>
       </ion-list>
     
       <ion-list *ngSwitchCase="'incompletas'">
         <ion-list inset>
-            <ion-item ion-item *ngFor="let receita of receitasIncompletas" (click)="detalhes(receita.id)">
+          <ion-item-sliding *ngFor="let receita of receitasIncompletas" (click)="detalhes(receita.id)">
+            <ion-item>
               <h2>{{ receita.titulo }}</h2>
               <h3>{{ receita.descricao }}</h3>
             </ion-item>
+            <ion-item-options side="right">
+                <button ion-button color="tertiary">
+                  <ion-icon name="create"></ion-icon>
+                  Montar
+                </button>
+                <button ion-button color="quaternary">
+                  <ion-icon name="close-circle"></ion-icon>
+                  Desmontar
+                </button>
+                <button ion-button color="danger">
+                  <ion-icon name="trash"></ion-icon>
+                  Deletar
+                </button>
+              </ion-item-options>
+          </ion-item-sliding>
         </ion-list>
       </ion-list>
     </div>
