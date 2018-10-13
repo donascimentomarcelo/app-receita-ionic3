@@ -21,7 +21,7 @@
     <div [ngSwitch]="tipoReceita">
       <ion-list *ngSwitchCase="'completas'">
         <ion-list inset>
-          <ion-item ion-item *ngFor="let receita of minhasReceitas" (click)="detalhes(receita.id)">
+          <ion-item ion-item *ngFor="let receita of receitasCompletas" (click)="detalhes(receita.id)">
             <h2>{{ receita.titulo }}</h2>
             <h3>{{ receita.descricao }}</h3>
           </ion-item>
@@ -29,7 +29,12 @@
       </ion-list>
     
       <ion-list *ngSwitchCase="'incompletas'">
-        ***
+        <ion-list inset>
+            <ion-item ion-item *ngFor="let receita of receitasIncompletas" (click)="detalhes(receita.id)">
+              <h2>{{ receita.titulo }}</h2>
+              <h3>{{ receita.descricao }}</h3>
+            </ion-item>
+        </ion-list>
       </ion-list>
     </div>
 </ion-content>

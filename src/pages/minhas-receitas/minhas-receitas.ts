@@ -11,7 +11,8 @@ import { DetalhesReceitasPage } from '../detalhes-receitas/detalhes-receitas';
 })
 export class MinhasReceitasPage {
 
-  public minhasReceitas: ReceitasDTO[];
+  public receitasCompletas: ReceitasDTO[];
+  public receitasIncompletas: ReceitasDTO[];
   tipoReceita: string = "completas";
 
   constructor(
@@ -31,7 +32,8 @@ export class MinhasReceitasPage {
     this.receitaService.listarMinhasReceitas()
       .subscribe(response => {
         carregando.dismiss();
-        this.minhasReceitas = response;
+        this.receitasCompletas = response['completas'];
+        this.receitasIncompletas = response['incompletas'];
       }, error => {
         carregando.dismiss();
         console.log(error);
