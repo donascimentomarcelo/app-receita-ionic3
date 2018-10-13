@@ -2,8 +2,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ReceitasDTO } from './../../models/receitas.dto';
 import { ReceitaService } from './../../services/domain/receita.service';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController, ModalController  } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController, ModalController, ToastController  } from 'ionic-angular';
 import { DetalhesReceitasPage } from '../detalhes-receitas/detalhes-receitas';
+import { Acoes } from '../../enums/acoes.enum';
 
 @IonicPage()
 @Component({
@@ -16,6 +17,7 @@ export class MinhasReceitasPage {
   public receitasIncompletas: ReceitasDTO[];
   public tipoReceita: string = "completas";
   public formGroup: FormGroup;
+  public acao: Acoes; // = Acoes.Criar;
 
   constructor(
     public navCtrl: NavController, 
@@ -23,7 +25,8 @@ export class MinhasReceitasPage {
     public receitaService: ReceitaService,
     public loadingCtrl: LoadingController,
     public modalCtrl: ModalController,
-    public formBuilder: FormBuilder) {
+    public formBuilder: FormBuilder,
+    public toastCtrl: ToastController) {
 
     this.formGroup = this.formBuilder.group({
       titulo: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
@@ -56,8 +59,10 @@ export class MinhasReceitasPage {
     return loader;
   }
 
-  public detalhes(id: number) {
-    const modal = this.modalCtrl.create(DetalhesReceitasPage, {id: id});
+  public detalhes(id: number, val: Acoes) {
+    this.acao = val;
+      
+    const modal = this.modalCtrl.create(DetalhesReceitasPage, {id: id, acao: this.acao});
     modal.onDidDismiss(data => {
       console.log(data);
     });
@@ -71,11 +76,20 @@ export class MinhasReceitasPage {
     const receita: ReceitasDTO = this.formGroup.value;
     this.receitaService.criar(receita)
       .subscribe(response => {
-        console.log(response);
+        this.mensagemSucesso();
         this.listarMinhasReceitas();
+        this.formGroup.reset();
       }, error => {
         console.log(error);
       });
+  }
+
+  mensagemSucesso() {
+    const toast = this.toastCtrl.create({
+      message: 'Receita criada com sucesso. A nova receita será exibida na aba de receitas incompletas.',
+      duration: 5000
+    });
+    toast.present();
   }
 
 }

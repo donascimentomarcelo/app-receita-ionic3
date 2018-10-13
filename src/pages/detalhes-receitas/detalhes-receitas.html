@@ -15,12 +15,22 @@
   <ion-card>
 
       <ion-card-header>
-        <h1>{{receita?.titulo}}</h1>
+        <h1 *ngIf="acao === 'visualizar'">{{receita?.titulo}}</h1>
+        <form [formGroup]="formGroup" (ngSubmit)="salvar()" *ngIf="acao === 'editar'">
+            <ion-item>
+                <ion-label fixed>Título</ion-label>
+                <ion-input type="text" formControlName="titulo"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label fixed>Descrição</ion-label>
+                <ion-textarea rows="5" type="text" formControlName="descricao"></ion-textarea>
+              </ion-item>
+        </form>
       </ion-card-header>
     
       <ion-card-content>
           <ion-item>
-            <h2>{{receita?.descricao}}</h2>
+            <h2 *ngIf="acao === 'visualizar'">{{receita?.descricao}}</h2>
           </ion-item>
           <ion-list inset>
             <ion-item ion-item *ngFor="let item of receita?.itens">
