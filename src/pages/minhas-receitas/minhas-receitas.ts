@@ -1,3 +1,4 @@
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ReceitasDTO } from './../../models/receitas.dto';
 import { ReceitaService } from './../../services/domain/receita.service';
 import { Component } from '@angular/core';
@@ -13,14 +14,21 @@ export class MinhasReceitasPage {
 
   public receitasCompletas: ReceitasDTO[];
   public receitasIncompletas: ReceitasDTO[];
-  tipoReceita: string = "completas";
+  public tipoReceita: string = "completas";
+  public formGroup: FormGroup;
 
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
     public receitaService: ReceitaService,
     public loadingCtrl: LoadingController,
-    public modalCtrl: ModalController) {
+    public modalCtrl: ModalController,
+    public formBuilder: FormBuilder) {
+
+    this.formGroup = this.formBuilder.group({
+      titulo: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
+      descricao: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]]
+    });
   }
 
   ionViewDidLoad() {
@@ -40,7 +48,7 @@ export class MinhasReceitasPage {
       });
   }
 
-  carregando() {
+  public carregando() {
     const loader = this.loadingCtrl.create({
       content: "Carregando..."
     });
@@ -48,7 +56,7 @@ export class MinhasReceitasPage {
     return loader;
   }
 
-  detalhes(id: number) {
+  public detalhes(id: number) {
     const modal = this.modalCtrl.create(DetalhesReceitasPage, {id: id});
     modal.onDidDismiss(data => {
       console.log(data);
@@ -56,5 +64,18 @@ export class MinhasReceitasPage {
     modal.present();
   }
 
+  public salvar() {
+    if (this.formGroup.status === 'INVALID') {
+      return;
+    }
+    const receita: ReceitasDTO = this.formGroup.value;
+    this.receitaService.criar(receita)
+      .subscribe(response => {
+        console.log(response);
+        this.listarMinhasReceitas();
+      }, error => {
+        console.log(error);
+      });
+  }
 
 }
