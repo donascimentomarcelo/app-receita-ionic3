@@ -42,7 +42,11 @@ $colors: (
   tertiary: (
     base: rgba(92, 3, 144, 0.953),
     contrast:#f4f4f4
-  )
+  ),
+  quaternary: (
+    base: rgb(184, 136, 212),
+    contrast:#f4f4f4
+  ),
 );
 
 
@@ -62,6 +66,9 @@ $background-color: rgba(215, 164, 245, 0.953);
 $label-md-text-color: rgba(92, 3, 144, 0.953);
 $focus-outline-border-color: rgba(92, 3, 144, 0.953);
 $text-input-md-highlight-color: rgba(92, 3, 144, 0.953);
+
+$segment-button-md-border-color-activated:#ffff;
+$segment-button-md-text-color-activated: #ffff;
 // App Windows Variables
 // --------------------------------------------------
 // Windows only Sass variables can go here
