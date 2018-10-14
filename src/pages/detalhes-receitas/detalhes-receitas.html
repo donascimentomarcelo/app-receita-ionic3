@@ -58,7 +58,7 @@
           <ion-list inset>
             <ion-item ion-item *ngFor="let item of receita?.itens">
               <h2>{{ item.engrediente.descricao }}</h2>
-                <button item-end ion-button round color="tertiary" (click)="removerItem(receita, item.engrediente)">
+                <button item-end ion-button round color="tertiary" (click)="confirmarRemocaoDeItem(receita, item.engrediente)">
                     <ion-icon name="md-trash"></ion-icon>
                 </button>
               <h3>{{ item.quantidade }} {{ item.engrediente.medida }}</h3>

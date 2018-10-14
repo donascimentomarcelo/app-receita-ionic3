@@ -4,7 +4,7 @@ import { Acoes } from './../../enums/acoes.enum';
 import { ReceitasDTO } from './../../models/receitas.dto';
 import { ReceitaService } from './../../services/domain/receita.service';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController, LoadingController, Loading, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController, LoadingController, Loading, ToastController, AlertController } from 'ionic-angular';
 import { ItemReceitaDTO } from '../../models/itemReceita.dto';
 
 @IonicPage()
@@ -26,7 +26,8 @@ export class DetalhesReceitasPage {
     public loadingCtrl: LoadingController,
     public receitaService: ReceitaService,
     public formBuilder: FormBuilder,
-    public toastCtrl: ToastController) {
+    public toastCtrl: ToastController,
+    private alertCtrl: AlertController) {
       
     this.formGroup = formBuilder.group({
       titulo: ['',[Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
@@ -107,11 +108,34 @@ export class DetalhesReceitasPage {
     
     this.receitaService.desmontar(itemReceita)
       .subscribe(response => {
-        console.log(response);
         this.pesquisar();
       }, error => {
         console.log(error);
       })
+  }
+
+  confirmarRemocaoDeItem(receita: ReceitasDTO, ingrediente: IngredientesDTO) {
+    let alert = this.alertCtrl.create({
+      title: 'Confirmar remoção',
+      message: 'Tem certeza que deseja remover esse item?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancelar',
+          handler: () => {
+            alert.dismiss();
+            return false;
+          }
+        },
+        {
+          text: 'Remover',
+          handler: () => {
+            this.removerItem(receita, ingrediente);
+          }
+        }
+      ]
+    });
+    alert.present();
   }
 
   public mensagemSucesso() {
