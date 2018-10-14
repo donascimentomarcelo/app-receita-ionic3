@@ -15,12 +15,45 @@
   <ion-card>
 
       <ion-card-header>
-        <h1>{{receita?.titulo}}</h1>
+        <h1 *ngIf="acao === 'visualizar'">{{receita?.titulo}}</h1>
+        <form [formGroup]="formGroup" (ngSubmit)="salvar()" *ngIf="acao === 'editar'">
+            <ion-item>
+                <ion-label fixed>Título</ion-label>
+                <ion-input type="text" formControlName="titulo"></ion-input>
+              </ion-item>
+              <p class="danger" 
+              *ngIf="formGroup.controls.titulo.dirty && formGroup.controls.titulo.hasError('required')" 
+              margin-left>A descrição é obrigatória.</p>
+              <p class="danger" 
+              *ngIf="formGroup.controls.titulo.dirty && formGroup.controls.titulo.hasError('minlength')" 
+              margin-left>Digite ao menos 3 caracteres.</p>
+              <p class="danger" 
+              *ngIf="formGroup.controls.titulo.dirty && formGroup.controls.titulo.hasError('maxlength')" 
+              margin-left>Digite até 20 caracteres.</p>
+
+              <ion-item>
+                <ion-label fixed>Descrição</ion-label>
+                <ion-textarea rows="5" type="text" formControlName="descricao"></ion-textarea>
+              </ion-item>
+              <p class="danger" 
+              *ngIf="formGroup.controls.descricao.dirty && formGroup.controls.descricao.hasError('required')" 
+              margin-left>A descrição é obrigatória.</p>
+              <p class="danger" 
+              *ngIf="formGroup.controls.descricao.dirty && formGroup.controls.descricao.hasError('minlength')" 
+              margin-left>Digite ao menos 3 caracteres.</p>
+              <p class="danger" 
+              *ngIf="formGroup.controls.descricao.dirty && formGroup.controls.descricao.hasError('maxlength')" 
+              margin-left>Digite até 50 caracteres.</p>
+
+              <ion-item>
+                  <button ion-button full color="tertiary" type="submit">Enviar</button>
+              </ion-item>
+        </form>
       </ion-card-header>
     
       <ion-card-content>
           <ion-item>
-            <h2>{{receita?.descricao}}</h2>
+            <h2 *ngIf="acao === 'visualizar'">{{receita?.descricao}}</h2>
           </ion-item>
           <ion-list inset>
             <ion-item ion-item *ngFor="let item of receita?.itens">
