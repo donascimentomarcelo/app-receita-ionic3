@@ -1,9 +1,9 @@
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Acoes } from './../../enums/acoes.enum';
 import { ReceitasDTO } from './../../models/receitas.dto';
 import { ReceitaService } from './../../services/domain/receita.service';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController, LoadingController, Loading } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController, LoadingController, Loading, ToastController } from 'ionic-angular';
 
 @IonicPage()
 @Component({
@@ -23,11 +23,12 @@ export class DetalhesReceitasPage {
     public viewCtrl: ViewController,
     public loadingCtrl: LoadingController,
     public receitaService: ReceitaService,
-    public formBuilder: FormBuilder) {
+    public formBuilder: FormBuilder,
+    public toastCtrl: ToastController) {
       
     this.formGroup = formBuilder.group({
-      titulo: [''],
-      descricao: [''] 
+      titulo: ['',[Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
+      descricao: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]] 
     })
   }
 
@@ -80,6 +81,26 @@ export class DetalhesReceitasPage {
     });
     loader.present();
     return loader;
+  }
+
+  public salvar() {
+    const receita: ReceitasDTO = this.formGroup.value;
+    const id: number = this.codigo;
+    this.receitaService.alterar(receita, id)
+      .subscribe(response => {
+        console.log(response);
+        this.mensagemSucesso();
+      }, error => {
+        console.log(error);
+      });
+  }
+
+  mensagemSucesso() {
+    const toast = this.toastCtrl.create({
+      message: 'Receita atualizada com sucesso',
+      duration: 5000
+    });
+    toast.present();
   }
 
 }

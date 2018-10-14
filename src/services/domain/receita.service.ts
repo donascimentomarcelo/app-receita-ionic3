@@ -29,4 +29,8 @@ constructor(public http: HttpClient) { }
     public criar(receita: ReceitasDTO) : Observable<ReceitasDTO> {
         return this.http.post<ReceitasDTO>(`${enviroment.baseUrl}/receitas`, receita);
     }
+
+    public alterar(receita: ReceitasDTO, id: number) : Observable<ReceitasDTO> {
+        return this.http.put<ReceitasDTO>(`${enviroment.baseUrl}/receitas/${id}`, receita);
+    }
 }

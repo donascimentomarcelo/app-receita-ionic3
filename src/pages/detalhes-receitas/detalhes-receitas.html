@@ -21,9 +21,32 @@
                 <ion-label fixed>Título</ion-label>
                 <ion-input type="text" formControlName="titulo"></ion-input>
               </ion-item>
+              <p class="danger" 
+              *ngIf="formGroup.controls.titulo.dirty && formGroup.controls.titulo.hasError('required')" 
+              margin-left>A descrição é obrigatória.</p>
+              <p class="danger" 
+              *ngIf="formGroup.controls.titulo.dirty && formGroup.controls.titulo.hasError('minlength')" 
+              margin-left>Digite ao menos 3 caracteres.</p>
+              <p class="danger" 
+              *ngIf="formGroup.controls.titulo.dirty && formGroup.controls.titulo.hasError('maxlength')" 
+              margin-left>Digite até 20 caracteres.</p>
+
               <ion-item>
                 <ion-label fixed>Descrição</ion-label>
                 <ion-textarea rows="5" type="text" formControlName="descricao"></ion-textarea>
+              </ion-item>
+              <p class="danger" 
+              *ngIf="formGroup.controls.descricao.dirty && formGroup.controls.descricao.hasError('required')" 
+              margin-left>A descrição é obrigatória.</p>
+              <p class="danger" 
+              *ngIf="formGroup.controls.descricao.dirty && formGroup.controls.descricao.hasError('minlength')" 
+              margin-left>Digite ao menos 3 caracteres.</p>
+              <p class="danger" 
+              *ngIf="formGroup.controls.descricao.dirty && formGroup.controls.descricao.hasError('maxlength')" 
+              margin-left>Digite até 50 caracteres.</p>
+
+              <ion-item>
+                  <button ion-button full color="tertiary" type="submit">Enviar</button>
               </ion-item>
         </form>
       </ion-card-header>

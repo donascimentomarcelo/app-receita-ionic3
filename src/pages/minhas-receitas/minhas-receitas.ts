@@ -64,7 +64,7 @@ export class MinhasReceitasPage {
       
     const modal = this.modalCtrl.create(DetalhesReceitasPage, {id: id, acao: this.acao});
     modal.onDidDismiss(data => {
-      console.log(data);
+      this.listarMinhasReceitas();
     });
     modal.present();
   }
