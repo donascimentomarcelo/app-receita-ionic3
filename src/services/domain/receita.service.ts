@@ -1,3 +1,4 @@
+import { ItemReceitaDTO } from './../../models/itemReceita.dto';
 import { ReceitasFiltro } from './../../models/filtros/receita.filter';
 import { ReceitasDTO } from './../../models/receitas.dto';
 import { enviroment } from './../../enviroment/enviroment.dev';
@@ -32,5 +33,9 @@ constructor(public http: HttpClient) { }
 
     public alterar(receita: ReceitasDTO, id: number) : Observable<ReceitasDTO> {
         return this.http.put<ReceitasDTO>(`${enviroment.baseUrl}/receitas/${id}`, receita);
+    }
+
+    public desmontar(itemReceita: ItemReceitaDTO) : Observable<ItemReceitaDTO> {
+        return this.http.put<ItemReceitaDTO>(`${enviroment.baseUrl}/receitas/desmontar`, itemReceita);
     }
 }

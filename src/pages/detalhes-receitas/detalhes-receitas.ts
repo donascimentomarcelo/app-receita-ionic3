@@ -1,9 +1,11 @@
+import { IngredientesDTO } from './../../models/ingredientes.dto';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Acoes } from './../../enums/acoes.enum';
 import { ReceitasDTO } from './../../models/receitas.dto';
 import { ReceitaService } from './../../services/domain/receita.service';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController, LoadingController, Loading, ToastController } from 'ionic-angular';
+import { ItemReceitaDTO } from '../../models/itemReceita.dto';
 
 @IonicPage()
 @Component({
@@ -95,7 +97,24 @@ export class DetalhesReceitasPage {
       });
   }
 
-  mensagemSucesso() {
+  public removerItem(receita: ReceitasDTO, ingrediente: IngredientesDTO) {
+    let receitaClone: ReceitasDTO = Object.assign({},receita);
+    delete receitaClone.itens;
+    const itemReceita: ItemReceitaDTO = {
+      engrediente: ingrediente,
+      receita: receitaClone
+    };
+    
+    this.receitaService.desmontar(itemReceita)
+      .subscribe(response => {
+        console.log(response);
+        this.pesquisar();
+      }, error => {
+        console.log(error);
+      })
+  }
+
+  public mensagemSucesso() {
     const toast = this.toastCtrl.create({
       message: 'Receita atualizada com sucesso',
       duration: 5000
