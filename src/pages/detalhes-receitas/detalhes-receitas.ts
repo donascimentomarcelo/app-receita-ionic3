@@ -1,10 +1,11 @@
+import { AddItemModalPage } from './../add-item-modal/add-item-modal';
 import { IngredientesDTO } from './../../models/ingredientes.dto';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Acoes } from './../../enums/acoes.enum';
 import { ReceitasDTO } from './../../models/receitas.dto';
 import { ReceitaService } from './../../services/domain/receita.service';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController, LoadingController, Loading, ToastController, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController, LoadingController, Loading, ToastController, AlertController, ModalController } from 'ionic-angular';
 import { ItemReceitaDTO } from '../../models/itemReceita.dto';
 
 @IonicPage()
@@ -27,7 +28,8 @@ export class DetalhesReceitasPage {
     public receitaService: ReceitaService,
     public formBuilder: FormBuilder,
     public toastCtrl: ToastController,
-    private alertCtrl: AlertController) {
+    private alertCtrl: AlertController,
+    public modalCtrl: ModalController) {
       
     this.formGroup = formBuilder.group({
       titulo: ['',[Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
@@ -114,7 +116,7 @@ export class DetalhesReceitasPage {
       })
   }
 
-  confirmarRemocaoDeItem(receita: ReceitasDTO, ingrediente: IngredientesDTO) {
+  public confirmarRemocaoDeItem(receita: ReceitasDTO, ingrediente: IngredientesDTO) {
     let alert = this.alertCtrl.create({
       title: 'Confirmar remoção',
       message: 'Tem certeza que deseja remover esse item?',
@@ -136,6 +138,14 @@ export class DetalhesReceitasPage {
       ]
     });
     alert.present();
+  }
+
+  public abreModalParaAdicionar() : void {
+    const modal = this.modalCtrl.create(AddItemModalPage, {id: this.codigo});
+    modal.onDidDismiss(data => {
+      this.pesquisar();
+    });
+    modal.present();
   }
 
   public mensagemSucesso() {

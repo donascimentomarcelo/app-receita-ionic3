@@ -1,3 +1,4 @@
+import { AddItemModalPage } from './../pages/add-item-modal/add-item-modal';
 import { DetalhesReceitasPage } from './../pages/detalhes-receitas/detalhes-receitas';
 import { ReceitaService } from './../services/domain/receita.service';
 import { IngredienteService } from './../services/domain/ingrediente.service';
@@ -15,6 +16,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
   declarations: [
     MyApp,
     DetalhesReceitasPage,
+    AddItemModalPage,
   ],
   imports: [
     BrowserModule,
@@ -25,6 +27,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
   entryComponents: [
     MyApp,
     DetalhesReceitasPage,
+    AddItemModalPage,
   ],
   providers: [
     StatusBar,
