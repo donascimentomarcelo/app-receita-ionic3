@@ -38,4 +38,8 @@ constructor(public http: HttpClient) { }
     public desmontar(itemReceita: ItemReceitaDTO) : Observable<ItemReceitaDTO> {
         return this.http.put<ItemReceitaDTO>(`${enviroment.baseUrl}/receitas/desmontar`, itemReceita);
     }
+
+    public addItem(itemReceita: ItemReceitaDTO) : Observable<ItemReceitaDTO> {
+        return this.http.put<ItemReceitaDTO>(`${enviroment.baseUrl}/receitas/montar`, itemReceita);
+    }
 }

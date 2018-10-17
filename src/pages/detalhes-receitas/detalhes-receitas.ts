@@ -105,7 +105,8 @@ export class DetalhesReceitasPage {
     delete receitaClone.itens;
     const itemReceita: ItemReceitaDTO = {
       engrediente: ingrediente,
-      receita: receitaClone
+      receita: receitaClone,
+      quantidade: null
     };
     
     this.receitaService.desmontar(itemReceita)
@@ -141,7 +142,7 @@ export class DetalhesReceitasPage {
   }
 
   public abreModalParaAdicionar() : void {
-    const modal = this.modalCtrl.create(AddItemModalPage, {id: this.codigo});
+    const modal = this.modalCtrl.create(AddItemModalPage, {receita: this.receita});
     modal.onDidDismiss(data => {
       this.pesquisar();
     });

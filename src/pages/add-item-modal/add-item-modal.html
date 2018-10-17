@@ -13,5 +13,32 @@
 
 
 <ion-content padding>
-
+    <ion-card>
+        <ion-card-header>
+          <h2>Adicione Itens</h2>
+        </ion-card-header>
+        <ion-card-content>
+            <ion-item>
+              <ion-label>Grupo</ion-label>
+              <ion-input type="number" min="0" max="59" step="1"  side="left"></ion-input>
+              <ion-select  (ionChange)="listarIngredientes($event)">
+                <ion-option *ngFor="let grupo of grupos" value="{{grupo.id}}">{{grupo.descricao}}</ion-option>
+              </ion-select>
+            </ion-item>
+            <ion-item>
+                <ion-label>Ingredientes</ion-label>
+                <ion-input type="number" min="0" max="59" step="1"  side="left"></ion-input>
+                <ion-select [disabled]="ingredientes?.length === 0" [(ngModel)]="ingrediente_id">
+                  <ion-option *ngFor="let ingrediente of ingredientes" value="{{ingrediente.id}}">{{ingrediente.descricao}}</ion-option>
+                </ion-select>
+            </ion-item>
+            <ion-item>
+                <ion-label fixed>Quantidade</ion-label>
+                <ion-input type="text" [(ngModel)]="quantidade"></ion-input>
+            </ion-item>
+            <ion-item>
+                <button ion-button full color="tertiary" type="button" (click)="adicionar()">Adicionar</button>
+            </ion-item>
+        </ion-card-content>
+    </ion-card>
 </ion-content>

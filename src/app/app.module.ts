@@ -1,3 +1,4 @@
+import { GrupoService } from './../services/domain/grupo.service';
 import { AddItemModalPage } from './../pages/add-item-modal/add-item-modal';
 import { DetalhesReceitasPage } from './../pages/detalhes-receitas/detalhes-receitas';
 import { ReceitaService } from './../services/domain/receita.service';
@@ -34,7 +35,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     IngredienteService,
-    ReceitaService
+    ReceitaService,
+    GrupoService,
   ]
 })
 export class AppModule {}
