@@ -56,14 +56,18 @@
             <h2>{{receita?.descricao}}</h2>
           </ion-item>
           <ion-list inset>
-            <ion-item>
+            <ion-item *ngIf="acao === 'editar'">
               <button item-start ion-button round color="tertiary" (click)="abreModalParaAdicionar()">
                   <ion-icon name="add"></ion-icon>
               </button>
             </ion-item>
             <ion-item ion-item *ngFor="let item of receita?.itens">
               <h2>{{ item.engrediente.descricao }}</h2>
-                <button item-end ion-button round color="tertiary" (click)="confirmarRemocaoDeItem(receita, item.engrediente)">
+                <button 
+                item-end ion-button round 
+                color="tertiary" 
+                (click)="confirmarRemocaoDeItem(receita, item.engrediente)"
+                *ngIf="acao === 'editar'">
                     <ion-icon name="trash"></ion-icon>
                 </button>
               <h3>{{ item.quantidade }} {{ item.engrediente.medida }}</h3>
