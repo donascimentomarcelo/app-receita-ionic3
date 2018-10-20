@@ -1,0 +1,24 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Pesquisar Receita</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+    <ion-list-header>
+        Digite os ingredientes e separe por virgula.
+    </ion-list-header>
+    <ion-tags-input
+        [(ngModel)]="tags"
+        [once]="true"
+        (onChange)="onChange($event)">
+    </ion-tags-input>
+    <ion-item>
+        <button ion-button full color="tertiary" type="button" (click)="pesquisar()">
+          Pesquisar
+        </button>
+    </ion-item>
+</ion-content>
