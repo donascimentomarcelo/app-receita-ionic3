@@ -12,6 +12,7 @@ import { MyApp } from './app.component';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import {IonTagsInputModule} from "ionic-tags-input";
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     AddItemModalPage,
   ],
   imports: [
+    IonTagsInputModule,
     BrowserModule,
     HttpClientModule,
     IonicModule.forRoot(MyApp),
