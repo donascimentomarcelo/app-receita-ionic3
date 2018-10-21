@@ -5,6 +5,7 @@ import { enviroment } from './../../enviroment/enviroment.dev';
 import { Observable } from 'rxjs/Observable';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { TagDTO } from '../../models/tag.dto';
 
 @Injectable()
 export class ReceitaService {
@@ -41,5 +42,9 @@ constructor(public http: HttpClient) { }
 
     public addItem(itemReceita: ItemReceitaDTO) : Observable<ItemReceitaDTO> {
         return this.http.put<ItemReceitaDTO>(`${enviroment.baseUrl}/receitas/montar`, itemReceita);
+    }
+
+    public pesquisarReceitas(tags: TagDTO[]) : Observable<ReceitasDTO[]> {
+        return this.http.post<ReceitasDTO[]>(`${enviroment.baseUrl}/receitas/pesquisar-receitas`, tags);
     }
 }
