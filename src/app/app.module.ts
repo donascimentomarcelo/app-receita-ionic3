@@ -1,3 +1,5 @@
+import { GrupoService } from './../services/domain/grupo.service';
+import { AddItemModalPage } from './../pages/add-item-modal/add-item-modal';
 import { DetalhesReceitasPage } from './../pages/detalhes-receitas/detalhes-receitas';
 import { ReceitaService } from './../services/domain/receita.service';
 import { IngredienteService } from './../services/domain/ingrediente.service';
@@ -10,13 +12,16 @@ import { MyApp } from './app.component';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import {IonTagsInputModule} from "ionic-tags-input";
 
 @NgModule({
   declarations: [
     MyApp,
     DetalhesReceitasPage,
+    AddItemModalPage,
   ],
   imports: [
+    IonTagsInputModule,
     BrowserModule,
     HttpClientModule,
     IonicModule.forRoot(MyApp),
@@ -25,13 +30,15 @@ import { SplashScreen } from '@ionic-native/splash-screen';
   entryComponents: [
     MyApp,
     DetalhesReceitasPage,
+    AddItemModalPage,
   ],
   providers: [
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     IngredienteService,
-    ReceitaService
+    ReceitaService,
+    GrupoService,
   ]
 })
 export class AppModule {}

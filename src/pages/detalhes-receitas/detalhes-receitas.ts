@@ -1,9 +1,12 @@
+import { AddItemModalPage } from './../add-item-modal/add-item-modal';
+import { IngredientesDTO } from './../../models/ingredientes.dto';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Acoes } from './../../enums/acoes.enum';
 import { ReceitasDTO } from './../../models/receitas.dto';
 import { ReceitaService } from './../../services/domain/receita.service';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController, LoadingController, Loading, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController, LoadingController, Loading, ToastController, AlertController, ModalController } from 'ionic-angular';
+import { ItemReceitaDTO } from '../../models/itemReceita.dto';
 
 @IonicPage()
 @Component({
@@ -24,7 +27,9 @@ export class DetalhesReceitasPage {
     public loadingCtrl: LoadingController,
     public receitaService: ReceitaService,
     public formBuilder: FormBuilder,
-    public toastCtrl: ToastController) {
+    public toastCtrl: ToastController,
+    private alertCtrl: AlertController,
+    public modalCtrl: ModalController) {
       
     this.formGroup = formBuilder.group({
       titulo: ['',[Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
@@ -95,7 +100,56 @@ export class DetalhesReceitasPage {
       });
   }
 
-  mensagemSucesso() {
+  public removerItem(receita: ReceitasDTO, ingrediente: IngredientesDTO) {
+    let receitaClone: ReceitasDTO = Object.assign({},receita);
+    delete receitaClone.itens;
+    const itemReceita: ItemReceitaDTO = {
+      engrediente: ingrediente,
+      receita: receitaClone,
+      quantidade: null
+    };
+    
+    this.receitaService.desmontar(itemReceita)
+      .subscribe(response => {
+        this.pesquisar();
+      }, error => {
+        console.log(error);
+      })
+  }
+
+  public confirmarRemocaoDeItem(receita: ReceitasDTO, ingrediente: IngredientesDTO) {
+    let alert = this.alertCtrl.create({
+      title: 'Confirmar remoção',
+      message: 'Tem certeza que deseja remover esse item?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancelar',
+          handler: () => {
+            alert.dismiss();
+            return false;
+          }
+        },
+        {
+          text: 'Remover',
+          handler: () => {
+            this.removerItem(receita, ingrediente);
+          }
+        }
+      ]
+    });
+    alert.present();
+  }
+
+  public abreModalParaAdicionar() : void {
+    const modal = this.modalCtrl.create(AddItemModalPage, {receita: this.receita});
+    modal.onDidDismiss(data => {
+      this.pesquisar();
+    });
+    modal.present();
+  }
+
+  public mensagemSucesso() {
     const toast = this.toastCtrl.create({
       message: 'Receita atualizada com sucesso',
       duration: 5000

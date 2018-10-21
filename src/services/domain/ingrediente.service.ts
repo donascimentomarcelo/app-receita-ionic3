@@ -11,5 +11,9 @@ export class IngredienteService {
 
     public listarTodos() : Observable<IngredientesDTO[]> {
         return this.http.get<IngredientesDTO[]>(`${enviroment.baseUrl}/engredientes`);    
-    } 
+    }
+    
+    public pesquisarPorGrupo(grupo: number) : Observable<IngredientesDTO[]> {
+        return this.http.get<IngredientesDTO[]>(`${enviroment.baseUrl}/engredientes/${grupo}/grupo`);    
+    }
 }

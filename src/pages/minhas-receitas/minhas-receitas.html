@@ -47,25 +47,25 @@
     
       <ion-list *ngSwitchCase="'incompletas'">
         <ion-list inset>
-          <ion-item-sliding *ngFor="let receita of receitasIncompletas" (click)="detalhes(receita.id)">
+          <ion-item-sliding *ngFor="let receita of receitasIncompletas">
             <ion-item>
               <h2>{{ receita.titulo }}</h2>
               <h3>{{ receita.descricao }}</h3>
             </ion-item>
             <ion-item-options side="right">
-                <button ion-button color="tertiary">
-                  <ion-icon name="create"></ion-icon>
+                <button ion-button color="tertiary" (click)="detalhes(receita.id, 'editar')">
+                  <ion-icon name="build"></ion-icon>
                   Montar
                 </button>
-                <button ion-button color="quaternary">
-                  <ion-icon name="close-circle"></ion-icon>
-                  Desmontar
+                <button ion-button color="quaternary" (click)="detalhes(receita.id, 'visualizar')">
+                  <ion-icon name="eye"></ion-icon>
+                  Detalhes
                 </button>
                 <button ion-button color="danger">
                   <ion-icon name="trash"></ion-icon>
                   Deletar
                 </button>
-              </ion-item-options>
+            </ion-item-options>
           </ion-item-sliding>
         </ion-list>
       </ion-list>
