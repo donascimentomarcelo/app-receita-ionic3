@@ -25,8 +25,7 @@ export class PesquisarReceitaPage {
    
     this.arr = this.tags.map((tag) => {
       const arr = {
-        label: 'ingrediente',
-        value: tag
+        valor: tag
       }
       return arr;
     });

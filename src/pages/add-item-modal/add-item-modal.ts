@@ -1,5 +1,5 @@
 import { ReceitaService } from './../../services/domain/receita.service';
-import { ReceitasDTO } from './../../models/receitas.dto';
+// import { ReceitasDTO } from './../../models/receitas.dto';
 import { ItemReceitaDTO } from './../../models/itemReceita.dto';
 import { IngredientesDTO } from './../../models/ingredientes.dto';
 import { IngredienteService } from './../../services/domain/ingrediente.service';
