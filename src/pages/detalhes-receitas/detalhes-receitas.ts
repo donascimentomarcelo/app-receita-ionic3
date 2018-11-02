@@ -1,3 +1,4 @@
+import { enviroment } from './../../enviroment/enviroment.dev';
 import { AddItemModalPage } from './../add-item-modal/add-item-modal';
 import { IngredientesDTO } from './../../models/ingredientes.dto';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -18,7 +19,8 @@ export class DetalhesReceitasPage {
   public codigo = this.navParams.get('id');
   public acao = this.navParams.get('acao');
   public receita: ReceitasDTO;
-  public formGroup: FormGroup
+  public formGroup: FormGroup;
+
 
   constructor(
     public navCtrl: NavController, 
@@ -30,7 +32,6 @@ export class DetalhesReceitasPage {
     public toastCtrl: ToastController,
     private alertCtrl: AlertController,
     public modalCtrl: ModalController) {
-      
     this.formGroup = formBuilder.group({
       titulo: ['',[Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
       descricao: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]] 

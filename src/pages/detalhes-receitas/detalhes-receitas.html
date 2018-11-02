@@ -73,10 +73,11 @@
               <h3>{{ item.quantidade }} {{ item.engrediente.medida }}</h3>
             </ion-item>
           </ion-list>
-        <ion-item>
-          <ion-icon name="logo-twitter" item-start></ion-icon>
-          Followers
-          <ion-badge item-end>260k</ion-badge>
+        <ion-item *ngFor="let avaliacao of receita?.avaliacao">
+          <!-- <ion-icon name="logo-twitter" item-start></ion-icon> -->
+          {{ avaliacao.comentario.comentario }}
+          <p>{{ avaliacao.usuario.nome }}</p>
+          <ion-badge item-end>{{ avaliacao.grau | titlecase }}</ion-badge>
         </ion-item>
       </ion-card-content>
     
