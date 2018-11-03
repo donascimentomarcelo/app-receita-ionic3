@@ -1,3 +1,6 @@
+import { ComentarioDTO } from './../../models/comentario.dto';
+import { RespostaDTO } from './../../models/resposta.dto';
+import { AvaliacaoDTO } from './../../models/avaliacao.dto';
 import { enviroment } from './../../enviroment/enviroment.dev';
 import { AddItemModalPage } from './../add-item-modal/add-item-modal';
 import { IngredientesDTO } from './../../models/ingredientes.dto';
@@ -8,6 +11,8 @@ import { ReceitaService } from './../../services/domain/receita.service';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController, LoadingController, Loading, ToastController, AlertController, ModalController } from 'ionic-angular';
 import { ItemReceitaDTO } from '../../models/itemReceita.dto';
+import * as Stomp from 'stompjs';
+import * as SockJS from 'sockjs-client';
 
 @IonicPage()
 @Component({
@@ -20,7 +25,8 @@ export class DetalhesReceitasPage {
   public acao = this.navParams.get('acao');
   public receita: ReceitasDTO;
   public formGroup: FormGroup;
-
+  public resposta: any[] = [];
+  private stompClient;
 
   constructor(
     public navCtrl: NavController, 
@@ -32,6 +38,7 @@ export class DetalhesReceitasPage {
     public toastCtrl: ToastController,
     private alertCtrl: AlertController,
     public modalCtrl: ModalController) {
+    this.initializeWebSocketConnection();
     this.formGroup = formBuilder.group({
       titulo: ['',[Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
       descricao: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]] 
@@ -156,6 +163,30 @@ export class DetalhesReceitasPage {
       duration: 5000
     });
     toast.present();
+  }
+
+  sendMessage(comentario: ComentarioDTO){
+
+    const mensagem: any = {
+      id: comentario.id,
+      resposta: this.resposta.toString(),
+    }
+    console.log(mensagem);
+    this.resposta = [];
+    // this.stompClient.send("/app/send/message" , {}, message);
+  }
+
+  initializeWebSocketConnection(){
+    let ws = new SockJS(enviroment.socketUrl);
+    this.stompClient = Stomp.over(ws);
+    let that = this;
+    this.stompClient.connect({}, function(frame) {
+      that.stompClient.subscribe("/chat", (message) => {
+        if(message.body) {
+          console.log(message.body);
+        }
+      });
+    });
   }
 
 }

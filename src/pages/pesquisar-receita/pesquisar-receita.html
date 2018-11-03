@@ -20,7 +20,7 @@
         (onChange)="onChange($event)">
     </ion-tags-input>
     <ion-item>
-        <button ion-button full color="tertiary" type="button" (click)="pesquisar()">
+        <button [disabled]="tags.length === 0" ion-button full color="tertiary" type="button" (click)="pesquisar()">
           Pesquisar
         </button>
     </ion-item>
