@@ -73,11 +73,31 @@
               <h3>{{ item.quantidade }} {{ item.engrediente.medida }}</h3>
             </ion-item>
           </ion-list>
-        <ion-item>
-          <ion-icon name="logo-twitter" item-start></ion-icon>
-          Followers
-          <ion-badge item-end>260k</ion-badge>
-        </ion-item>
+          <ion-item>
+            <ion-icon name="star" item-start></ion-icon>
+            Avaliações
+          </ion-item>
+          <ion-list>
+            <ion-item *ngFor="let avaliacao of receita?.avaliacao; let i = index">
+              <ion-item>
+                {{ avaliacao.comentario.comentario }}
+                <p>{{ avaliacao.usuario.nome }}</p>
+                <ion-badge item-end color="quaternary">{{ avaliacao.grau | titlecase }}</ion-badge>
+              </ion-item>
+              <ion-item>
+                <ion-input 
+                  placeholder="Comente aqui..." 
+                  clearInput 
+                  [(ngModel)]="resposta[i]"
+                  [value]="resposta[i]"
+                  name="resposta-{{i}}"></ion-input>
+                <button ion-button icon-end item-end color="tertiary" (click)="sendMessage(avaliacao.comentario)">
+                  Comentar
+                  <ion-icon name="text"></ion-icon>
+                </button>
+              </ion-item>
+            </ion-item>
+          </ion-list>
       </ion-card-content>
     
     </ion-card>

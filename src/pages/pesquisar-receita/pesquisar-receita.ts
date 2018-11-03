@@ -1,5 +1,10 @@
+import { DetalhesReceitasPage } from './../detalhes-receitas/detalhes-receitas';
+import { Acoes } from './../../enums/acoes.enum';
+import { ReceitasDTO } from './../../models/receitas.dto';
+import { ReceitaService } from './../../services/domain/receita.service';
+import { TagDTO } from './../../models/tag.dto';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController, ModalController } from 'ionic-angular';
 
 @IonicPage()
 @Component({
@@ -8,12 +13,16 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class PesquisarReceitaPage {
 
-  public tags = [];
+  public tags: TagDTO[] = [];
   public arr = [];
+  public receitas: ReceitasDTO[] = [];
 
   constructor(
     public navCtrl: NavController, 
-    public navParams: NavParams) {
+    public navParams: NavParams,
+    public receitaService: ReceitaService,
+    public loadingCtrl: LoadingController,
+    public modalCtrl: ModalController,) {
   }
 
   ionViewDidLoad() {
@@ -32,7 +41,32 @@ export class PesquisarReceitaPage {
   }
 
   public pesquisar() {
-    console.log(this.arr);
+    let carregando = this.carregando();
+    this.receitaService.pesquisarReceitas(this.arr)
+      .subscribe(response => {
+        this.receitas = response;
+        carregando.dismiss();
+      }, error => {
+        console.log(error);
+      })
+  }
+
+  public carregando() {
+    const loader = this.loadingCtrl.create({
+      content: "Carregando..."
+    });
+    loader.present();
+    return loader;
+  }
+
+  public detalhes(id: number) {
+      
+    const modal = this.modalCtrl.create(DetalhesReceitasPage, {id: id, acao: Acoes.Visualizar});
+    let carregando = this.carregando();
+    setTimeout(() => {
+      modal.present();
+      carregando.dismiss();
+    }, 1000);
   }
 
 }
