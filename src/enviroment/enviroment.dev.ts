@@ -1,3 +1,4 @@
 export const enviroment  = {
-    baseUrl: "http://localhost:8080/api/v1"
+    baseUrl: "http://localhost:8080/api/v1",
+    socketUrl:"http://localhost:8080/socket"
 }
