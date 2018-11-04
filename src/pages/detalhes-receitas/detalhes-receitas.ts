@@ -1,6 +1,4 @@
 import { ComentarioDTO } from './../../models/comentario.dto';
-import { RespostaDTO } from './../../models/resposta.dto';
-import { AvaliacaoDTO } from './../../models/avaliacao.dto';
 import { enviroment } from './../../enviroment/enviroment.dev';
 import { AddItemModalPage } from './../add-item-modal/add-item-modal';
 import { IngredientesDTO } from './../../models/ingredientes.dto';
@@ -167,23 +165,31 @@ export class DetalhesReceitasPage {
 
   sendMessage(comentario: ComentarioDTO){
 
-    const mensagem: any = {
-      id: comentario.id,
+    const mensagem = {
+      comentario_id: comentario.id,
+      usuario_id: null,
+      receita_id: this.codigo,
       resposta: this.resposta.toString(),
     }
-    console.log(mensagem);
+
     this.resposta = [];
-    // this.stompClient.send("/app/send/message" , {}, message);
+    this.stompClient.send("/app/send/message" , {}, JSON.stringify(mensagem));
+    console.log(this.codigo)
   }
 
   initializeWebSocketConnection(){
     let ws = new SockJS(enviroment.socketUrl);
     this.stompClient = Stomp.over(ws);
     let that = this;
+    'use strict'
+    const codigo_receita = this.codigo;
     this.stompClient.connect({}, function(frame) {
       that.stompClient.subscribe("/chat", (message) => {
         if(message.body) {
-          console.log(message.body);
+          const resposta =  JSON.parse(message.body);
+          if (resposta.receita_id == codigo_receita) {
+            console.log(resposta);
+          }
         }
       });
     });
