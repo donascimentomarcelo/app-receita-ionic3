@@ -11,6 +11,7 @@ import { IonicPage, NavController, NavParams, ViewController, LoadingController,
 import { ItemReceitaDTO } from '../../models/itemReceita.dto';
 import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
+import $ from 'jquery';
 
 @IonicPage()
 @Component({
@@ -24,6 +25,7 @@ export class DetalhesReceitasPage {
   public receita: ReceitasDTO;
   public formGroup: FormGroup;
   public resposta: any[] = [];
+  public respostas = [];
   private stompClient;
 
   constructor(
@@ -174,7 +176,6 @@ export class DetalhesReceitasPage {
 
     this.resposta = [];
     this.stompClient.send("/app/send/message" , {}, JSON.stringify(mensagem));
-    console.log(this.codigo)
   }
 
   initializeWebSocketConnection(){
@@ -183,12 +184,15 @@ export class DetalhesReceitasPage {
     let that = this;
     'use strict'
     const codigo_receita = this.codigo;
+    let respostas = this.respostas;
     this.stompClient.connect({}, function(frame) {
       that.stompClient.subscribe("/chat", (message) => {
         if(message.body) {
           const resposta =  JSON.parse(message.body);
           if (resposta.receita_id == codigo_receita) {
-            console.log(resposta);
+            $(".resp-"+resposta.comentario_id).append("<div class='message'>"+resposta.resposta+"</div>")
+            respostas.push(resposta.resposta.toString());
+            // console.log(respostas);
           }
         }
       });
