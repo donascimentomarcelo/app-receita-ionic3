@@ -1,6 +1,4 @@
 import { ComentarioDTO } from './../../models/comentario.dto';
-import { RespostaDTO } from './../../models/resposta.dto';
-import { AvaliacaoDTO } from './../../models/avaliacao.dto';
 import { enviroment } from './../../enviroment/enviroment.dev';
 import { AddItemModalPage } from './../add-item-modal/add-item-modal';
 import { IngredientesDTO } from './../../models/ingredientes.dto';
@@ -13,6 +11,7 @@ import { IonicPage, NavController, NavParams, ViewController, LoadingController,
 import { ItemReceitaDTO } from '../../models/itemReceita.dto';
 import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
+import $ from 'jquery';
 
 @IonicPage()
 @Component({
@@ -26,6 +25,7 @@ export class DetalhesReceitasPage {
   public receita: ReceitasDTO;
   public formGroup: FormGroup;
   public resposta: any[] = [];
+  public respostas = [];
   private stompClient;
 
   constructor(
@@ -167,23 +167,33 @@ export class DetalhesReceitasPage {
 
   sendMessage(comentario: ComentarioDTO){
 
-    const mensagem: any = {
-      id: comentario.id,
+    const mensagem = {
+      comentario_id: comentario.id,
+      usuario_id: null,
+      receita_id: this.codigo,
       resposta: this.resposta.toString(),
     }
-    console.log(mensagem);
+
     this.resposta = [];
-    // this.stompClient.send("/app/send/message" , {}, message);
+    this.stompClient.send("/app/send/message" , {}, JSON.stringify(mensagem));
   }
 
   initializeWebSocketConnection(){
     let ws = new SockJS(enviroment.socketUrl);
     this.stompClient = Stomp.over(ws);
     let that = this;
+    'use strict'
+    const codigo_receita = this.codigo;
+    let respostas = this.respostas;
     this.stompClient.connect({}, function(frame) {
       that.stompClient.subscribe("/chat", (message) => {
         if(message.body) {
-          console.log(message.body);
+          const resposta =  JSON.parse(message.body);
+          if (resposta.receita_id == codigo_receita) {
+            $(".resp-"+resposta.comentario_id).append("<div class='message'>"+resposta.resposta+"</div>")
+            respostas.push(resposta.resposta.toString());
+            // console.log(respostas);
+          }
         }
       });
     });
