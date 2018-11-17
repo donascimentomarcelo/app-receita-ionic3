@@ -170,6 +170,7 @@ export class DetalhesReceitasPage {
     const mensagem = {
       comentario_id: comentario.id,
       usuario_id: null,
+      nome: null,
       receita_id: this.codigo,
       resposta: this.resposta.toString(),
     }
