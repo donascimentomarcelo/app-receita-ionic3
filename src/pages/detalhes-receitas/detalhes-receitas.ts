@@ -173,8 +173,9 @@ export class DetalhesReceitasPage {
       receita_id: this.codigo,
       resposta: this.resposta.toString(),
     }
-
+    
     this.resposta = [];
+    console.log( this.resposta);
     this.stompClient.send("/app/send/message" , {}, JSON.stringify(mensagem));
   }
 
@@ -184,15 +185,13 @@ export class DetalhesReceitasPage {
     let that = this;
     'use strict'
     const codigo_receita = this.codigo;
-    let respostas = this.respostas;
     this.stompClient.connect({}, function(frame) {
       that.stompClient.subscribe("/chat", (message) => {
         if(message.body) {
           const resposta =  JSON.parse(message.body);
           if (resposta.receita_id == codigo_receita) {
-            $(".resp-"+resposta.comentario_id).append("<div class='message'>"+resposta.resposta+"</div>")
-            respostas.push(resposta.resposta.toString());
-            // console.log(respostas);
+            $(".resp-"+resposta.comentario_id).append("<div class='tabela-resposta'>"+resposta.resposta+"</div>")
+            console.log(resposta);
           }
         }
       });
